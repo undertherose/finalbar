@@ -87,7 +87,7 @@
           .style("opacity", 0);
     
     let header = div.append("h1")
-        .text("Victim Gender in Status ")
+       .text("Victim Gender in Status ")
   
       // let toolTipChart = div.append("div").attr("id", "tipChart")
       //let toolChart = div.append('svg')
@@ -131,14 +131,14 @@
             div.transition()
                 .duration(200)
                 .style("opacity", .9);
-            plotGender(d.key,data,toolChart)
+            plotGender(d.key,data,toolChart, header)
             div//.html("Fertility:       " + d.fertility + "<br/>" +
                     // "Life Expectancy: " + d.life_expectancy + "<br/>" +
                     // "Population:      " + numberWithCommas(d["population"]) + "<br/>" +
                     // "Year:            " + d.year + "<br/>" +
                     // "Country:         " + d.country)
                 .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 100) + "px");
+                .style("top", (d3.event.pageY - 250) + "px");
             
         })
         .on("mouseout", (d) => {
@@ -193,7 +193,7 @@
                 .style("fill", "#69b3a2")*/
 
         })}
-        function plotGender(key, data, toolChart) {
+        function plotGender(key, data, toolChart, header) {
 
             let keyData = data.filter((row) => {return row['Status Description'] == key});
 
@@ -233,21 +233,44 @@
         
           // add the y Axis
     toolChart.append("g")
-              .call(d3.axisLeft(y));
-    }
+              .call(d3.axisLeft(y));  
+    
+    header.text("Victim Sex Distribution in Status \"" + key + "\"");
+    toolChart.append("text")
+              .attr("class", "x label")
+              .attr("text-anchor", "end")
+              .attr("x", 250)
+              .attr("y", 400)
+              .text("Victim Sex");   
+    toolChart.append("text")
+              .attr("class", "y label")
+              .attr("text-anchor", "end")
+              .attr("x", -90)
+              .attr("y", -100)
+              //.attr("dy", ".75em")
+              .attr("transform", "rotate(-90)")
+              .text("Number of Cases"); 
+            }
 
-    toolChart.append("text")
-                .attr("class", "x label")
-                .attr("text-anchor", "end")
-                .attr("x", 25)
-                .attr("y", 40)
-                .text("Victim Sex");   
-    toolChart.append("text")
-                .attr("class", "y label")
-                .attr("text-anchor", "end")
-                .attr("x", -90)
-                .attr("y", -100)
-                //.attr("dy", ".75em")
-                .attr("transform", "rotate(-90)")
-                .text("Number of Cases");
+
+    //makeLabels(toolChart, small_msm, "Population Over Time For " + country, "Year", "Population (in Millions)");
+
+/*     div.append('h1')
+        .attr('x', (width - 2 * margin.left) / 2 - 90)
+        .attr('y', margin.left / 2 + 10)
+        .style('font-size', '10pt')
+        .text("Victim" + key); */
+
+/*     div.append('text')
+        .attr('x', (width - 2 * margin.left) / 2 - 30)
+        .attr('y', height - 10)
+        .style('font-size', '10pt')
+        .text("Victim Sex");
+
+    div.append('text')
+        .attr('transform', 'translate( 15,' + (height / 2 + 30) + ') rotate(-90)')
+        .style('font-size', '10pt')
+        .text("Number of Cases"); */
+
+
 })()
